@@ -8,13 +8,13 @@ module.exports = class HookService {
     return new HookService(options, serviceManager)
   }
 
-  init () {
-
+  init (ginkgo) {
+    this.ginkgo = ginkgo
   }
 
   createHook (handler, ...args) {
-    return function (ctx, next) {
+    this.ginkgo.factory.create(function (ctx, next) {
       return handler(ctx, next, ...args)
-    }
+    })
   }
 }

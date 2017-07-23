@@ -12,8 +12,8 @@ module.exports = class ControllerService {
     return new ControllerService(options, serviceManager)
   }
 
-  init (app) {
-    this.app = app
+  init (ginkgo) {
+    this.ginkgo = ginkgo
     const directoryService = this.serviceManager.get('directory')
     this.directory = directoryService.CONTROLLER_ROOT
     this.loadControllers(this.directory)
@@ -23,7 +23,7 @@ module.exports = class ControllerService {
     fs.readdirSync(directory).forEach(it => {
       const filePath = path.join(directory, it)
       if (fs.statSync(filePath).isDirectory()) {
-        this.app.useRoute(this.loadRoutes(filePath))
+        this.ginkgo.app.useRoute(this.loadRoutes(filePath))
       } else {
         throw new Error("Invalid Controller directory:" + filePath)
       }
@@ -33,7 +33,7 @@ module.exports = class ControllerService {
   loadRoutes (filePath) {
     const version = path.basename(filePath)
     const routePrefix = (this.options.basePath || '/') + version
-    const route = this.app.createRouter({ prefix: routePrefix })
+    const route = this.ginkgo.factory.createRouter({ prefix: routePrefix })
 
     fs.readdirSync(filePath).forEach(it => {
       const subPath = path.join(filePath, it)

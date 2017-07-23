@@ -11,8 +11,8 @@ module.exports = class ValidatorService {
     return new ValidatorService(options, serviceManager)
   }
 
-  init (app) {
-
+  init (ginkgo) {
+    this.ginkgo = ginkgo
   }
 
   execValidate (schema, params) {
@@ -20,7 +20,6 @@ module.exports = class ValidatorService {
     const exceptionService = this.serviceManager.get('exception')
     if (error) {
       const exception = exceptionService.createValidateError(error)
-      console.dir(exception)
       return Promise.reject(exception)
     } else {
       return Promise.resolve()

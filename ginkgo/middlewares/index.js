@@ -11,9 +11,9 @@ module.exports = class MiddlewareService {
     return new MiddlewareService(options, serviceManager)
   }
 
-  init (app) {
-    const 
-    app.use()
+  init (ginkgo) {
+    // const 
+    // app.use()
   }
 
   setupErrorHandler (handler) {

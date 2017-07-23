@@ -1,22 +1,29 @@
 global.Promise = require('bluebird')
 const ServiceManager = require('./service_manager')
-const KoaApplication = require('./adapter/application/koa_adapter')
-const KoaAdapter = require('./adapter/')
+// const KoaApplication = require('./adapter/application/koa_adapter')
+const KoaFactory = require('./adapter/koa_factory')
 
 module.exports = class Application {
   constructor (options) {
-    this.app = new KoaApplication(options)
+    this.adapterFactory = new KoaFactory(options)
+    this.application = this.adapterFactory.createApplication(options)
     this.serviceManager = new ServiceManager(options)
   }
 
-  run () {
-    this.directory.init(this.app)
-    this.hooks.init(this.app)
-    this.logger.init(this.app)
-    this.controllers.init(this.app)
-    this.middlewares.init(this.app)
-    this.validator.init(this.app)
-    this.responser.init(this.app)
+  run (port) {
+    this.directory.init(this)
+    this.hooks.init(this)
+    this.logger.init(this)
+    this.controllers.init(this)
+    this.middlewares.init(this)
+    this.validator.init(this)
+    this.responser.init(this)
+
+    return this.app.listen(port)
+  }
+
+  get factory () {
+    return this.adapterFactory
   }
 
   get middlewares () {
@@ -51,7 +58,7 @@ module.exports = class Application {
     return this.serviceManager
   }
 
-  getApp () {
-    return this.app
+  get app () {
+    return this.application
   }
 }
