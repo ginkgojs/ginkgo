@@ -9,6 +9,4 @@ const configure = {
 
 const ginkgo = new Ginkgo(configure)
 
-const app = ginkgo.getApp()
-
-app.listen(8080)
+ginkgo.run(8080)
