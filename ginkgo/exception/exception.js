@@ -1,7 +1,10 @@
 const util = require('util')
 
-module.exports = class Exception {
+//TODO
+module.exports = class Exception extends Error {
   constructor (code, args, message) {
+    super()
+    this.headerSent = true
     this.code = code
     this.args = args
     this.message = message

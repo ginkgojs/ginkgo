@@ -33,7 +33,7 @@ module.exports = class ExceptionService {
 
   createValidateError (error) {
     const args = []
-    const status = 400
+    const status = 200
     const message = error.message
     const code = this.options.defaultErrorCode
     return HttpException.create(status, code, args, message)    
