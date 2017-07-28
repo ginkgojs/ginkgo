@@ -6,11 +6,7 @@ module.exports = class {
   createHook (handler) {
 
   }
-
-  createMiddleware (handler) {
-
-  }
-
+  
   createApplication (options) {
 
   }

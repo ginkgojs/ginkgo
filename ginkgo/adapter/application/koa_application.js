@@ -13,13 +13,22 @@ module.exports = class KoaAdapter extends Application {
   }
 
   use (handler) {
-    this.app.use()
+    this.app.use(handler)
   }
 
-  errorHandler (handler) {
-    this.app.on('error', (error, ctx) => {
-      handler(error, ctx)
-    })
+  createErrorHandler (handler) {
+    this.app.context.onerror = function (error, ctx) {
+      handler(error, this)
+    }
+    // this.app.on('error', (error, ctx) => {
+    //   handler(error, ctx)
+    // })
+  }
+
+  createMiddleware (handler) {
+    return function (ctx, next) {
+      return handler(ctx, next)
+    }
   }
 
   listen (port) {

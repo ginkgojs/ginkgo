@@ -14,12 +14,6 @@ module.exports = class KoaAdapter extends AdapterFactory {
     }
   }
 
-  createMiddleware (handler) {
-    return function (ctx, next) {
-      return handler(ctx, next)
-    }
-  }
-
   createApplication (options) {
     debug('createApplication', options)
     return new KoaApplication(options)
