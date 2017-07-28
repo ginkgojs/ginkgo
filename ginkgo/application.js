@@ -1,6 +1,5 @@
 global.Promise = require('bluebird')
 const ServiceManager = require('./service_manager')
-// const KoaApplication = require('./adapter/application/koa_adapter')
 const KoaFactory = require('./adapter/koa_factory')
 
 module.exports = class Application {
