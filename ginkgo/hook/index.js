@@ -13,7 +13,7 @@ module.exports = class HookService {
   }
 
   createHook (handler, ...args) {
-    this.ginkgo.factory.create(function (ctx, next) {
+    return this.ginkgo.factory.createHook(function (ctx, next) {
       return handler(ctx, next, ...args)
     })
   }

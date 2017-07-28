@@ -35,10 +35,22 @@ module.exports = class ControllerService {
     const routePrefix = (this.options.basePath || '/') + version
     const route = this.ginkgo.factory.createRouter({ prefix: routePrefix })
 
+    const middlewareService = this.serviceManager.get('middlewares')
+    const beforeHandlers = middlewareService.loadBeforeRouterHandler()
+    const afterHandlers = middlewareService.loadAfterRouterHandler()
+
+    if (beforeHandlers.length) {
+      route.use(...beforeHandlers)
+    }
+
     fs.readdirSync(filePath).forEach(it => {
       const subPath = path.join(filePath, it)
       this.loadRouteHandler(route, subPath)
     })
+
+    if (afterHandlers.length) {
+      route.use(...afterHandlers)
+    }
 
     return route
   }
