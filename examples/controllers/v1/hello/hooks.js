@@ -14,6 +14,7 @@ function afterHookSayHello (app) {
 
 module.exports.before = {
  sayHello: [
+  ginkgo.hooks.getHook('sayCommon'),
   preHookSayHello()
  ]
 }
