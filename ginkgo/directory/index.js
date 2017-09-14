@@ -12,7 +12,7 @@ module.exports = class DirectoryService {
     this.directorys.HOOK_ROOT = path.resolve(options.APP_ROOT, 'hooks')
     this.directorys.SERVICE_ROOT = path.resolve(options.APP_ROOT, 'services')
     this.directorys.CONTROLLER_ROOT = path.resolve(options.APP_ROOT, 'controllers')
-    // debug(this.directorys)
+    debug(this.directorys)
     this.ensureDirectory('LOG_ROOT')
   }
 
@@ -38,6 +38,10 @@ module.exports = class DirectoryService {
     if (!fs.existsSync(directory)) {
       fs.mkdirSync(directory)
     }
+  }
+
+  get HOOK_ROOT () {
+    return this.getDirectory("HOOK_ROOT")
   }
 
   get MODEL_ROOT () {

@@ -4,6 +4,7 @@ const KoaFactory = require('./adapter/koa_factory')
 
 module.exports = class Application {
   constructor (options) {
+    global.ginkgo = this    
     this.adapterFactory = new KoaFactory(options)
     this.application = this.adapterFactory.createApplication(options)
     this.serviceManager = new ServiceManager(options)
