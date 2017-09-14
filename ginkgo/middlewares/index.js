@@ -1,8 +1,4 @@
-const responser = require('./responser')
-const errorHandler = require('./error_handler')
-
 //middlewares模块在加载controller的时候，自动加载router，handler
-//提供三个内置middlewares: not_found / error_handler / responser
 module.exports = class MiddlewareService {
   constructor (options, serviceManager) {
     this.options = options
@@ -20,8 +16,6 @@ module.exports = class MiddlewareService {
   init (ginkgo) {
     this.ginkgo = ginkgo
     this.app = ginkgo.app
-    this.app.use(this.app.createMiddleware(responser.makeHandler(this.serviceManager)))
-    this.app.createErrorHandler(errorHandler.makeHandler(this.serviceManager))
   }
 
   loadBeforeRouterHandler (handler) {
@@ -50,13 +44,5 @@ module.exports = class MiddlewareService {
 
   setAuthorizeHandler (handler) {
     this.setRouterHandler('before', handler)
-  }
-
-  setupErrorHandler (handler) {
-    errorHandler.customize(handler)
-  }
-
-  setupResponseHandler (handler) {
-    responser.customize(handler)
   }
 }

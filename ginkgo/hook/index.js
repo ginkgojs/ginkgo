@@ -21,6 +21,23 @@ module.exports = class HookService {
     this.loadHooks(this.directory)
   }
 
+  errorHanlder (ctx, next, err) {
+    const responserService = this.serviceManager.get('responser')
+    const { status, data } = responserService.normalizeError(err)
+    debug(err)
+    if (!ctx.headerSent) {
+      ctx.body = data
+      ctx.status = status
+    }
+  }
+
+  responseHandler (ctx, next, result) {
+    const responserService = this.serviceManager.get('responser')
+    const { status, data } = responserService.normalizeNormal(result)
+    ctx.body = data
+    ctx.status = status    
+  }
+
   loadHooks (directory) {
     fs.readdirSync(directory).forEach(file => {
       const filePath = path.join(directory, file)

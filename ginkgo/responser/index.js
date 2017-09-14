@@ -16,12 +16,13 @@ module.exports = class ResponserService {
 
   normalizeNormal (result) {
     debug('normalizeNormal', result)
+    return { status: 200, data: result }
   }
 
   normalizeError (err) {
     const data = {}    
     const status = err.status || 500
-    
+
     data.code = err.code || -1
     data.message = err.format ? err.format() : err.message
 

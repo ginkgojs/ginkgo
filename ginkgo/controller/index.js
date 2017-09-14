@@ -86,7 +86,8 @@ module.exports = class ControllerService {
     const validator = this.makeValidator(name, filePath)
     const beforeHooks = this.makeBeforeHooks(name, filePath)
     const afterHooks = this.makeAfterHooks(name, filePath)
-
+    const hookService = this.serviceManager.get('hook')
+    
     function handler (...args) {
       debug('invoke validator')      
       return validator(...args)
@@ -98,9 +99,15 @@ module.exports = class ControllerService {
           debug('invoke handler')          
           return definition.handler(...args)          
         })
-        .then(() => {
+        .then(result => {
           debug('invoke afterHooks')         
-          return afterHooks(...args)
+          return afterHooks(...args.concat(result))
+        })
+        .then(([result]) => {
+          return hookService.responseHandler(...args.concat(result))
+        })
+        .catch(err => {
+          return hookService.errorHandler(...args.concat(err))
         })
     }
 
