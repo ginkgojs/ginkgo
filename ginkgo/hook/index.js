@@ -39,14 +39,10 @@ module.exports = class HookService {
   }
 
   loadHooks (directory) {
-    fs.readdirSync(directory).forEach(file => {
-      const filePath = path.join(directory, file)
-      if (!fs.statSync(filePath).isFile()) {
-        debug("loadHooks warn: need file " + filePath)
-      } else {
-        this.loadHookFile(filePath)
-      }
-    })
+    if (!fs.existsSync(directory)) {
+      throw new Error("hook directory not found")
+    }
+    this.loadHookFile(directory)
   }
 
   loadHookFile (filePath) {
