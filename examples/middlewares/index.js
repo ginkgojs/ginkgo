@@ -5,10 +5,10 @@ function authorize (params) {
 }
 
 module.exports = {
-  before: {
+  before: [
     authorize()
-  },
-  after: {
+  ],
+  after: [
 
-  }
+  ]
 }
