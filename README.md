@@ -22,6 +22,7 @@ node app.js
 
 - 1. i18n
 - 2. unit test & integrated test
+- 3. dynamic config
 
 ---
 
