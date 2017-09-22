@@ -18,6 +18,11 @@ node app.js
 
 ```
 
+### Todo List
+
+- 1. i18n
+- 2. unit test & integrated test
+
 ---
 
 ### License [MIT](https://opensource.org/licenses/MIT)
