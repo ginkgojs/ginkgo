@@ -29,8 +29,8 @@ module.exports = class ConfigureService {
     return this.wrapConfig(defaultConfig, envConfig)
   }
 
-  loadConfigFile (filePath) {
-    const data = fs.readFileSync(filePath, { encoding: 'utf8' })
+  loadConfigFile (fileName) {
+    const data = fs.readFileSync(path.join(this.configRoot, fileName), { encoding: 'utf8' })
     return JSON.parse(data)
   }
 
