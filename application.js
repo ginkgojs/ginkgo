@@ -22,6 +22,10 @@ module.exports = class Application {
     return this.app.listen(port)
   }
 
+  get env () {
+    return process.NODE_ENV || "development"
+  }
+
   get factory () {
     return this.adapterFactory
   }
@@ -32,6 +36,10 @@ module.exports = class Application {
 
   get logger () {
     return this.ServiceFactory.get('logger')
+  }
+
+  get configure () {
+    return this.ServiceFactory.get('configure')
   }
 
   get controllers () {

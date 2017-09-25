@@ -6,6 +6,7 @@ const Directory = require('../directory')
 const Controller = require('../controller')
 const Validator = require('../validator')
 const Responser = require('../responser')
+const Configure = require('../configure')
 const Middlewares = require('../middlewares')
 
 module.exports = class ServiceFactory {
@@ -36,7 +37,15 @@ module.exports = class ServiceFactory {
     const middlewares = instance.createMiddlewares(serviceManager)
     serviceManager.set('middlewares', middlewares)
 
+    const configure = instance.createConfigure(serviceManager)
+    serviceManager.set('configure', configure)
+    
     return
+  }
+
+  createConfigure (serviceManager) {
+    const options = this.options.configure || {}
+    return Configure.create(options, serviceManager)
   }
 
   createLogger (serviceManager) {
