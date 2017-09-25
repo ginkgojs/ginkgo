@@ -1,5 +1,5 @@
 global.Promise = require('bluebird')
-const ServiceManager = require('./service_manager')
+const ServiceFactory = require('./service_factory')
 const KoaFactory = require('./adapter/koa_factory')
 
 module.exports = class Application {
@@ -7,7 +7,7 @@ module.exports = class Application {
     global.ginkgo = this    
     this.adapterFactory = new KoaFactory(options)
     this.application = this.adapterFactory.createApplication(options)
-    this.serviceManager = new ServiceManager(options)
+    this.ServiceFactory = new ServiceFactory(options)
   }
 
   run (port) {
@@ -27,35 +27,35 @@ module.exports = class Application {
   }
 
   get middlewares () {
-    return this.serviceManager.get('middlewares')
+    return this.ServiceFactory.get('middlewares')
   }
 
   get logger () {
-    return this.serviceManager.get('logger')
+    return this.ServiceFactory.get('logger')
   }
 
   get controllers () {
-    return this.serviceManager.get('controller')
+    return this.ServiceFactory.get('controller')
   }
 
   get hooks () {
-    return this.serviceManager.get('hook')
+    return this.ServiceFactory.get('hook')
   }
 
   get validator () {
-    return this.serviceManager.get('validator')
+    return this.ServiceFactory.get('validator')
   }
 
   get responser () {
-    return this.serviceManager.get('responser')
+    return this.ServiceFactory.get('responser')
   }
 
   get directory () {
-    return this.serviceManager.get('directory')
+    return this.ServiceFactory.get('directory')
   }
 
   get services () {
-    return this.serviceManager
+    return this.ServiceFactory
   }
 
   get app () {
