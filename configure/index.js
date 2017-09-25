@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const ConfigWrapper = require('./config')
+const debug = require('debug')('ginkgo:configure:index')
 
 module.exports = class ConfigureService {
   constructor (options, serviceManager) {
@@ -30,6 +31,7 @@ module.exports = class ConfigureService {
   }
 
   loadConfigFile (fileName) {
+    debug('loadConfigFile: ', fileName)
     const data = fs.readFileSync(path.join(this.configRoot, fileName), { encoding: 'utf8' })
     return JSON.parse(data)
   }
