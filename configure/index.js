@@ -13,15 +13,19 @@ module.exports = class ConfigureService {
     return new ConfigureService(options, serviceManager)
   }
 
-  init (app) {
-    const env = app.env
+  getConfigRoot () {
     const dirService = this.serviceManager.get('directory')
-    this.configRoot = dirService.CONFIG_ROOT || this.options.configRoot
-    if (!fs.existsSync(this.configRoot)) {
+    const configRoot = dirService.CONFIG_ROOT || this.options.configRoot
+    if (!fs.existsSync(configRoot)) {
       throw new Error("Configure Root Path not exists")
-    } else {
-      this.configure = this.loadConfig(env)      
     }
+    return configRoot
+  }
+
+  init (app) {
+    this.env = app.env
+    this.configRoot = this.getConfigRoot()
+    this.configure = this.loadConfig(this.env)
   }
 
   loadConfig (env) {
@@ -46,6 +50,6 @@ module.exports = class ConfigureService {
   }
 
   has (...args) {
-    return this.configure.has(...args)    
+    return this.configure.has(...args)
   }
 }
