@@ -3,8 +3,8 @@ const LogLevel = require('./log_level')
 const printCreator = require('./print')
 const formatCreator = require('./format')
 
-const DefaultPrints = ['std', 'file']
 const DefaultFormats = ['std', 'error']
+const DefaultPrints = [{ stream: process.stdout }]
 
 module.exports = class Logger {
   constructor (options, serviceManager) {
@@ -67,7 +67,7 @@ module.exports = class Logger {
   }
 
   debug (...args) {
-    args.unshift(LogLevel.DEBUG) 
+    args.unshift(LogLevel.DEBUG)
     return this.write(...args)
   }
 
