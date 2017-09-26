@@ -4,7 +4,8 @@
   "description": "",
   "main": "application.js",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "test": "mocha test/**/*.test.js",
+    "cov": "nyc --reporter=html npm test"
   },
   "repository": {
     "type": "git",
