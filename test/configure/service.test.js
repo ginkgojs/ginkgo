@@ -1,13 +1,19 @@
 const fs = require('fs')
+const path = require('path')
 const chai = require('chai')
 const sinon = require('sinon')
 const should = chai.should()
 const ConfigureService = require('../../configure')
 
-describe('configure test', () => {
+describe('configure service test', () => {
   describe('create service test', () => {
     it('should ok', () => {
       const service = new ConfigureService()
+      service.should.have.property('options')
+      service.should.have.property('serviceManager')
+    })
+    it('should allow create by static method', () => {
+      const service = ConfigureService.create()
       service.should.have.property('options')
       service.should.have.property('serviceManager')
     })
@@ -55,6 +61,25 @@ describe('configure test', () => {
       sandbox.mock(service).expects('wrapConfig').withExactArgs({a: 1}, {b: 2})
       service.loadConfig("development")
       sandbox.verifyAndRestore()
+    })
+
+    it('should allow load config file', () => {
+      const fileName = "test.txt"
+      const service = new ConfigureService()
+      const sandbox = sinon.sandbox.create()
+      service.setConfigRoot("/a/b/c")
+      sandbox.mock(fs).expects('readFileSync').once().withExactArgs(path.join('/a/b/c', fileName), { encoding: 'utf8' })
+        .returns(JSON.stringify({ a: 1 }))
+      const ret = service.loadConfigFile(fileName)
+      ret.should.deep.equal({ a : 1 })
+    })
+
+    it('should allow wrap config', () => {
+      const arg1 = {a : 1}
+      const arg2 = {b : 2}
+      const service = new ConfigureService()
+      const sandbox = sinon.sandbox.create()
+      service.wrapConfig(arg1, arg2)      
     })
   })
 
