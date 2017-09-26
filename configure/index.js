@@ -22,6 +22,11 @@ module.exports = class ConfigureService {
     return configRoot
   }
 
+  setConfigRoot (root) {
+    this.configRoot = root
+    return this
+  }
+
   init (app) {
     this.env = app.env
     this.configRoot = this.getConfigRoot()

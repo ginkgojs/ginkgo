@@ -41,7 +41,7 @@ Configure.prototype.has = function (args) {
 Configure.prototype.get = function (args) {
   const val = this._getValue(args)
   if (typeof val === 'object' && val !== null) {
-    return this._freeze(Object)
+    return this._freeze(val)
   } else {
     return val
   }
@@ -55,6 +55,7 @@ Configure.prototype._freeze = function (value) {
       } else {
         acc[cur] = obj[cur]
       }
+      return acc
     }, {})
     return Object.freeze(result)
   }
