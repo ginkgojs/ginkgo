@@ -9,6 +9,10 @@ module.exports = class StdFormat extends Format {
 
   format (level, str, ...args) {
     const f = LogLevel.LEVEL_FORMATER[level]
-    return util.format(f + str, ...agrs)
+    return util.format(f + str, ...args)
+  }
+
+  match (arg) {
+    return arg && typeof arg === 'string'
   }
 }

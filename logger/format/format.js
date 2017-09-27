@@ -6,4 +6,8 @@ module.exports = class Format {
   format (...args) {
 
   }
+
+  match (arg) {
+    
+  }
 }

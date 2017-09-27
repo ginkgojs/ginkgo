@@ -9,5 +9,8 @@ module.exports = function (type) {
     case 'error': {
       return new ErrorFormat()
     }
+    default: {
+      throw new Error("Unknow Format Type:" + type)
+    }
   }
 }

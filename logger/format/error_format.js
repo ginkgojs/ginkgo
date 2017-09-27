@@ -1,12 +1,19 @@
 const util = require('util')
 const Format = require('./format')
+const LogLevel = require('../log_level')
 
 module.exports = class ErrorFormat extends Format {
   constructor (options) {
     super(options)
   }
 
-  format (err) {
-    return util.format(`error code: ${err.code}, message: ${err.message}`)
+  format (level, err) {
+    const f = LogLevel.LEVEL_FORMATER[level]    
+    return util.format(`${f} error code: ${err.code}, message: ${err.message}`)
+  }
+
+  match (arg) {
+    console.log("test error")
+    return arg && arg instanceof Error
   }
 }
