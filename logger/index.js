@@ -30,7 +30,7 @@ module.exports = class Logger {
       } else if (it.path) {
         return printCreator('file', it)        
       } else {
-        debug('unknow print:', it)
+        throw new Error("Unknow Print: " + it)
       }
     })
   }
@@ -44,8 +44,7 @@ module.exports = class Logger {
 
   write (level, str, ...args) {
     const formater = this.getFormater(str)
-    const message = formater.format(level, str, ...agrs)
-
+    const message = formater.format(level, str, ...args)
     this.prints.forEach(printer => {
       if (level > printer.getLevel()) {
         printer.write(message)
@@ -53,12 +52,12 @@ module.exports = class Logger {
     })
   }
 
-  getFormater (str) {
-    if (str instanceof Error) {
-      return this.formats['error']
-    } else {
-      return this.formats['std']
-    }
+  getFormater (arg) {
+    return Object.keys(this.formats)
+      .find(type => {
+      const formater = this.formats[type]
+      return formater.match(arg)
+    })
   }
 
   info (...args) {
