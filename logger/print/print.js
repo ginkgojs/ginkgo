@@ -1,7 +1,7 @@
 const LogLevel = require('../log_level')
 
 module.exports = class Print {
-  constructor (options) {
+  constructor (options = {}) {
     this.options = options
     this.level = this.options.level || LogLevel.INFO
   }

@@ -4,10 +4,10 @@ const Print = require('./print')
 module.exports = class StdPrint extends Print {
   constructor (options) {
     super(options)
-    this.stream = options.stream
+    this.stream = options.stream || process.stdout
   }
 
-  write (message, options) {
+  write (message) {
     this.stream.write(message)
   }
 }

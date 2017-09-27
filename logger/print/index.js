@@ -9,5 +9,8 @@ module.exports = function (type, options) {
     case 'file': {
       return new FilePrint(options)
     }
+    default: {
+      throw new Error("Unknow Print Type:" + type)
+    }
   }
 }

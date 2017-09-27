@@ -15,7 +15,7 @@ module.exports = class FilePrint extends Print {
     fs.existsSync(fileDirectory) || fs.mkdirSync(fileDirectory)
   }
 
-  write (message, options) {
-    fs.writeFileSync(this.path, message, options)
+  write (message) {
+    fs.writeFileSync(this.path, message)
   }
 }
