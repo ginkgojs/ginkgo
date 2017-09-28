@@ -17,13 +17,19 @@ module.exports = class ExceptionService {
     return new ExceptionService(options, serviceManager)
   }
 
+  init (ginkgo) {
+    this.defaultErrorCode = this.options.defaultErrorCode
+    this.defaultErrorMessage = this.options.defaultErrorMessage
+    this.validateErrorCode = this.options.validateErrorCode || this.options.defaultErrorCode
+  }
+
   createException (code, ...args) {
     let message
     const locale = this.serviceManager.get('locale')
 
     if (!code) {
-      code = this.options.defaultErrorCode
-      message = this.options.defaultErrorMessage
+      code = this.defaultErrorCode
+      message = this.defaultErrorMessage
     } else {
       message = locale.fetch(code)
     }
@@ -35,13 +41,14 @@ module.exports = class ExceptionService {
     const args = []
     const status = 200
     const message = error.message
-    const code = this.options.defaultErrorCode
+    const code = this.validateErrorCode
     return HttpException.create(status, code, args, message)    
   }
 
   createHttpException (status, code, ...args) {
     let message
-
+    
+    const locale = this.serviceManager.get('locale')    
     if (!code) {
       code = this.options.defaultErrorCode
     } else {

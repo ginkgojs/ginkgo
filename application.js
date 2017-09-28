@@ -18,6 +18,7 @@ module.exports = class Application {
     this.middlewares.init(this)
     this.validator.init(this)
     this.responser.init(this)
+    this.exception.init(this)
 
     return this.app.listen(port)
   }
@@ -64,6 +65,10 @@ module.exports = class Application {
 
   get services () {
     return this.ServiceFactory
+  }
+
+  get exception () {
+    return this.ServiceFactory.get('exception')
   }
 
   get app () {
