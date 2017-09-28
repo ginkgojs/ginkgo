@@ -13,7 +13,6 @@ module.exports = class ErrorFormat extends Format {
   }
 
   match (arg) {
-    console.log("test error")
     return arg && arg instanceof Error
   }
 }
