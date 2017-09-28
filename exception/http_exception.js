@@ -22,7 +22,7 @@ module.exports = class HttpException extends Exception {
 
   setStatus (status) {
     this.status = status
-    this.message = httpStatus[status]
+    this.message = statuses[status]
     return this
   }
 }
