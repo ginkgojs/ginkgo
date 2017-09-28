@@ -88,4 +88,11 @@ describe('logger test', () => {
       sandbox.verifyAndRestore()
     })
   })
+
+  describe("logger get formater", () => {
+    it("should ok", () => {
+      const logger = Logger.create({}, {})
+      logger.getFormater("std")
+    })
+  })
 })
