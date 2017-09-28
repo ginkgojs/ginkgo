@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const debug = require('debug')('ginkgo:startup:directory')
+const debug = require('debug')('ginkgo:service:directory')
 
 module.exports = class DirectoryService {
   constructor (options, serviceManager) {
@@ -15,24 +15,17 @@ module.exports = class DirectoryService {
     this.directorys.MIDDLEWARES_ROOT = path.resolve(options.APP_ROOT, 'middlewares')
     
     debug(this.directorys)
-    this.ensureDirectory('LOG_ROOT')
   }
 
   static create (options, serviceManager) {
+    if (!options.APP_ROOT || !fs.existsSync(options.APP_ROOT)) {
+      throw new Error("App Root Not Setup")
+    }
     return new DirectoryService(options, serviceManager)
   }
 
   init () {
-
-  }
-
-  checkDirectoryExists (dir) {
-    if (!fs.existsSync(dir)) {
-      throw new Error('Directory Not Exists: ' + dir)
-    }
-    if (!fs.statSync(dir).isDirectory()) {
-      throw new Error('Not a Directory ' + dir)
-    }
+    this.ensureDirectory('LOG_ROOT')    
   }
 
   ensureDirectory (name) {
